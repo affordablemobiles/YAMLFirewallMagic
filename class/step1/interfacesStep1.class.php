@@ -11,7 +11,7 @@ class InterfacesStep1 {
 		$this->_parse();
 	}
 	
-	private function __parse(){
+	private function _parse(){
 		if ( is_array($this->pdata['interfaces']) ){
 			foreach ($this->pdata['interfaces'] as $rif){
 				if (( !empty($rif['ifname']) ) && ( !empty($rif['osifname']) )){
