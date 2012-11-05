@@ -1,6 +1,16 @@
 <?php
 
+require __DIR__ . '/abstract/logableBase.class.php';
+require __DIR__ . '/abstract/step1.class.php';
+
+/*---------------------------+
+|       Step 1 Classes       |
+|     Pre-Processing Work    |
++---------------------------*/
 require __DIR__ . '/step1/interfacesStep1.class.php';
+require __DIR__ . '/step1/filterTableStep1.class.php';
+require __DIR__ . '/step1/natTableStep1.class.php';
+require __DIR__ . '/step1/mangleTableStep1.class.php';
 
 class FirewallParser {
 	private $parsed;
@@ -75,6 +85,9 @@ class FirewallParser {
 	
 	private function _step1(){
 		$if_step1 = new InterfacesStep1($this->parsed, $this->dataArray);
+		$ftbl_step1 = new filterTableStep1($this->parsed, $this->dataArray);
+		$ntbl_step1 = new natTableStep1($this->parsed, $this->dataArray);
+		$mtbl_step1 = new mangleTableStep1($this->parsed, $this->dataArray);
 	}
 	
 	private function _step2(){

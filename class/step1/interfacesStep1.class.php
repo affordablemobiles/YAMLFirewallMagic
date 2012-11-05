@@ -1,6 +1,6 @@
 <?php
 
-class InterfacesStep1 {
+class InterfacesStep1 extends logableBase {
 	private $dataArray;
 	private $pdata;
 	
@@ -22,14 +22,6 @@ class InterfacesStep1 {
 			}
 		} else {
 			$this->logError('No Interfaces Array Found!', true);
-		}
-	}
-	
-	private function logError($message, $die = true){
-		if ($die){
-			die( $message . "\n" );
-		} else {
-			echo $message . "\n";
 		}
 	}
 	
