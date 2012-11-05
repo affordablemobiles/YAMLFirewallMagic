@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/step1/interfacesStep1.class.php';
+
 class FirewallParser {
 	private $parsed;
 	
@@ -72,11 +74,11 @@ class FirewallParser {
 	}
 	
 	private function _step1(){
-		
+		$if_step1 = new InterfacesStep1($this->parsed, $this->dataArray);
 	}
 	
 	private function _step2(){
-		
+		print_r($this->dataArray);
 	}
 	
 	private function _step3(){

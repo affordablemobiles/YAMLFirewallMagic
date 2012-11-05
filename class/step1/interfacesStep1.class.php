@@ -1,10 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
+<?php
 
-<body>
-</body>
-</html>
+class InterfacesStep1 {
+	private $dataArray;
+	private $pdata;
+	
+	public function __construct($parsed, &$dataArray){
+		$this->dataArray =& $dataArray;
+		$this->pdata = $parsed;
+		
+		$this->_parse();
+	}
+	
+	private function __parse(){
+		if ( is_array($this->pdata['interfaces']) ){
+			foreach ($this->pdata['interfaces'] as $rif){
+				if (( !empty($rif['ifname']) ) && ( !empty($rif['osifname']) )){
+					$this->dataArray['interfaces'][$rif['ifname']] = $rif['osifname'];
+				} else {
+					$this->logError('Invalid Interface Layout' . var_export($rif, true) );
+				}
+			}
+		} else {
+			$this->logError('No Interfaces Array Found!', true);
+		}
+	}
+	
+	private function logError($message, $die = true){
+		if ($die){
+			die( $message . "\n" );
+		} else {
+			echo $message . "\n";
+		}
+	}
+	
+}
