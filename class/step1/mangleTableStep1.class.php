@@ -54,6 +54,23 @@ class mangleTableStep1 extends Step1 {
 					} else {
 						$this->logError('Warning: rules array for default chain INPUT (mangle) doesn\'t exist.', false);
 					}
+				} else if (@$dchain['name'] == 'FORWARD'){
+					if (!empty($dchain['policy'])){
+						if ($this->_validDefaultPolicy($dchain['policy'])){
+							$this->dataArray['tables']['mangle']['default-chains']['FORWARD']['policy'] = $dchain['policy'];
+						} else {
+							$this->logError('Error: invalid policy for FORWARD chain (mangle) - ' . $dchain['policy'], true);
+						}
+					} else {
+						$this->logError('Warning: policy not defined for default chain FORWARD (mangle) - using default of DROP', false);
+					}
+					if ( @is_array($dchain['rules']) ){
+						foreach ($dchain['rules'] as $rule){
+							$this->dataArray['tables']['mangle']['default-chains']['FORWARD']['rules'][] = $rule;
+						}
+					} else {
+						$this->logError('Warning: rules array for default chain FORWARD (mangle) doesn\'t exist.', false);
+					}
 				} else if (@$dchain['name'] == 'OUTPUT'){
 					if (!empty($dchain['policy'])){
 						if ($this->_validDefaultPolicy($dchain['policy'])){
