@@ -5,6 +5,7 @@ class natTableStep1 extends Step1 {
 	protected function _parse(){
 		$this->_defaultChains();
 		$this->_ipChains();
+		$this->_otherChains();
 	}
 	
 	private function _validDefaultPolicy($policy){
@@ -36,7 +37,7 @@ class natTableStep1 extends Step1 {
 							$this->dataArray['tables']['nat']['default-chains']['PREROUTING']['rules'][] = $rule;
 						}
 					} else {
-						$this->logError('Warning: rules array for default chain INPUT doesn\'t exist.', false);
+						$this->logError('Warning: rules array for default chain PREROUTING (NAT) doesn\'t exist.', false);
 					}
 				} else if (@$dchain['name'] == 'INPUT'){
 					if (!empty($dchain['policy'])){
@@ -80,14 +81,14 @@ class natTableStep1 extends Step1 {
 							$this->logError('Error: invalid policy for POSTROUTING chain (NAT) - ' . $dchain['policy'], true);
 						}
 					} else {
-						$this->logError('Warning: policy not defined for default chain OUTPUT (NAT) - using default of ACCEPT', false);
+						$this->logError('Warning: policy not defined for default chain POSTROUTING (NAT) - using default of ACCEPT', false);
 					}
 					if ( @is_array($dchain['rules']) ){
 						foreach ($dchain['rules'] as $rule){
 							$this->dataArray['tables']['nat']['default-chains']['POSTROUTING']['rules'][] = $rule;
 						}
 					} else {
-						$this->logError('Warning: rules array for default chain OUTPUT (NAT) doesn\'t exist.', false);
+						$this->logError('Warning: rules array for default chain POSTROUTING (NAT) doesn\'t exist.', false);
 					}
 				} else {
 					$this->logError( 'Invalid Default Chain - ' . var_export($dchain, true), false);
@@ -123,6 +124,36 @@ class natTableStep1 extends Step1 {
 					$this->logError( 'Error: in-iface not specified in ip-chain (NAT)', true);
 				}
 			}
+		}
+	}
+	
+	private function _otherChains(){
+		if ( @is_array( $this->pdata['other-chains'] ) ){
+			foreach( $this->pdata['other-chains'] as $ochain ){
+				if ( !empty( $ochain['name'] ) ){
+					if ( ! @is_array($this->dataArray['tables']['nat']['other-chains'][$ochain['name']]) ){
+						if ( @is_array( $ochain['rules'] ) ){
+							$this->dataArray['tables']['nat']['other-chains'][$ochain['name']] = array('default-goto' => 'ACCEPT', 'rules' => array());
+							foreach ( $ochain['rules'] as $rule ){
+								$this->dataArray['tables']['nat']['other-chains'][$ochain['name']]['rules'][] = $rule;
+							}
+							if ( !empty( $ochain['default-goto'] ) ){
+								$this->dataArray['tables']['nat']['other-chains'][$ochain['name']]['default-goto'] = $ochain['default-goto'];
+							} else {
+								$this->logError( 'Warning: using default-goto of ACCEPT for other-chain (NAT) as none specified!', false);
+							}
+						} else {
+							$this->logError( 'Error: rules array missing from other chain (NAT) - ' . var_dump($ochain, true), true);
+						}
+					} else {
+						$this->logError( 'Error: \'other\' chain (NAT) with this name already exists - ' . var_dump($ochain, true), true);
+					}
+				} else {
+					$this->logError( 'Error: you must specify a name for a other chain (NAT) - ' . var_dump($ochain, true), true);
+				}
+			}
+		} else {
+			$this->logError( 'Warning: service chains block (NAT) doesn\'t exist.', false);
 		}
 	}
 	
