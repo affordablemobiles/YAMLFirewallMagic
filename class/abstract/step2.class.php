@@ -80,7 +80,7 @@ abstract class Step2 extends logableBase {
 			// Now check for the in-iface
 			if(!empty($rule['in-iface'])){
 				if(in_array($rule['in-iface'], array_keys($this->dataArray['interfaces']))){
-					$this->appendToRule("-i " . $rule['in-iface'], $iptables);
+					$this->appendToRule("-i " . $this->dataArray['interfaces'][$rule['in-iface']], $iptables);
 					$this->array_remove_key($rule, "in-iface");
 				} else {
 					$this->logError('Error: Invalid in-iface - ' . var_export($initrule, true), true);
@@ -90,7 +90,7 @@ abstract class Step2 extends logableBase {
 			// And check for the out-iface
 			if(!empty($rule['out-iface'])){
 				if(in_array($rule['out-iface'], array_keys($this->dataArray['interfaces']))){
-					$this->appendToRule("-o " . $rule['out-iface'], $iptables);
+					$this->appendToRule("-o " . $this->dataArray['interfaces'][$rule['out-iface']], $iptables);
 					$this->array_remove_key($rule, "out-iface");
 				} else {
 					$this->logError('Error: Invalid out-iface - ' . var_export($initrule, true), true);
