@@ -10,12 +10,12 @@ class filterTableStep2 extends Step2 {
 		}
 		
 		// Then process the firewall chains...
-		//foreach ($this->dataArray['tables']['filter']['fw-chains'] as $a => &$b){
-			//$b['iptables-rules'] = array();
-			//echo 'var1 ' . var_export($a, true) . ' - var 2 ' . var_export($b, true) . ' - end';
-			//$this->transformToIPTables($b['rules'], $b['iptables-rules']);
-		//}
-		/*
+		foreach ($this->dataArray['tables']['filter']['fw-chains'] as $a => &$b){
+			$b['iptables-rules'] = array();
+			echo 'var1 ' . var_export($a, true) . ' - var 2 ' . var_export($b, true) . ' - end';
+			$this->transformToIPTables($b['rules'], $b['iptables-rules']);
+		}
+		
 		// Now the interface chains...
 		foreach ($this->dataArray['tables']['filter']['iface-chains'] as &$e){
 			$e['iptables-rules'] = array();
@@ -32,7 +32,7 @@ class filterTableStep2 extends Step2 {
 		foreach ($this->dataArray['tables']['filter']['other-chains'] as $h => &$i){
 			$i['iptables-rules'] = array();
 			$this->transformToIPTables($i['rules'], $i['iptables-rules']);
-		}*/
+		}
 	}
 	
 	protected function parseGoTo(&$rule, &$result){
