@@ -94,12 +94,12 @@ class FirewallParser {
 	
 	private function _step1(){
 		$if_step1 = new InterfacesStep1($this->parsed, $this->dataArray);
-		foreach ( $this->parsed['tables'] as $table ){
-			if (@$table['name'] == 'filter'){
+		foreach ( $this->parsed['tables'] as $name => $table ){
+			if (@$name == 'filter'){
 				$ftbl_step1 = new filterTableStep1($table, $this->dataArray);
-			} else if (@$table['name'] == 'nat'){
+			} else if (@$name == 'nat'){
 				$ntbl_step1 = new natTableStep1($table, $this->dataArray);
-			} else if (@$table['name'] == 'mangle'){
+			} else if (@$name == 'mangle'){
 				$mtbl_step1 = new mangleTableStep1($table, $this->dataArray);
 			} else {
 				die('Invalid Table Detected');
