@@ -2,6 +2,7 @@
 
 require __DIR__ . '/abstract/logableBase.class.php';
 require __DIR__ . '/abstract/step1.class.php';
+require __DIR__ . '/abstract/step2.class.php';
 
 /*---------------------------+
 |       Step 1 Classes       |
@@ -11,6 +12,14 @@ require __DIR__ . '/step1/interfacesStep1.class.php';
 require __DIR__ . '/step1/filterTableStep1.class.php';
 require __DIR__ . '/step1/natTableStep1.class.php';
 require __DIR__ . '/step1/mangleTableStep1.class.php';
+
+/*---------------------------+
+|       Step 2 Classes       |
+|    Transform to IPTables   |
++---------------------------*/
+require __DIR__ . '/step2/filterTableStep2.class.php';
+require __DIR__ . '/step2/natTableStep2.class.php';
+require __DIR__ . '/step2/mangleTableStep2.class.php';
 
 class FirewallParser {
 	private $parsed;
@@ -99,11 +108,21 @@ class FirewallParser {
 	}
 	
 	private function _step2(){
-		print_r($this->dataArray);
+		foreach ( $this->dataArray['tables'] as $table ){
+			if (@$table['name'] == 'filter'){
+				$ftbl_step2 = new filterTableStep2($this->dataArray);
+			} else if (@$table['name'] == 'nat'){
+				$ntbl_step2 = new natTableStep2($$this->dataArray);
+			} else if (@$table['name'] == 'mangle'){
+				$mtbl_step2 = new mangleTableStep2($this->dataArray);
+			} else {
+				die('Invalid Table Detected');
+			}
+		}
 	}
 	
 	private function _step3(){
-		
+		print_r($this->dataArray);
 	}
 	
 }

@@ -1,10 +1,40 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
+<?php
 
-<body>
-</body>
-</html>
+class filterTableStep2 extends Step2 {
+	
+	protected function _parse(){
+		// First, process the default chains...
+		foreach ($this->dataArray['tables']['filter']['default-chains'] as &$a => &$b){
+			$b['iptables-rules'] = array();
+			$this->transformToIPTables($b['rules'], $b['iptables-rules']);
+		}
+		
+		// Then process the firewall chains...
+		foreach ($this->dataArray['tables']['filter']['fw-chains'] as &$c => &$d){
+			$d['iptables-rules'] = array();
+			$this->transformToIPTables($d['rules'], $d['iptables-rules']);
+		}
+		
+		// Now the interface chains...
+		foreach ($this->dataArray['tables']['filter']['iface-chains'] as &$e){
+			$e['iptables-rules'] = array();
+			$this->transformToIPTables($e['rules'], $e['iptables-rules']);
+		}
+		
+		// Now the service chains...
+		foreach ($this->dataArray['tables']['filter']['service-chains'] as &$f => &$g){
+			$g['iptables-rules'] = array();
+			$this->transformToIPTables($g['rules'], $g['iptables-rules']);
+		}
+		
+		// And finally, the others...
+		foreach ($this->dataArray['tables']['filter']['other-chains'] as &$a => &$b){
+			$b['iptables-rules'] = array();
+			$this->transformToIPTables($b['rules'], $b['iptables-rules']);
+		}
+	}
+	
+	protected function parseGoTo(&$rule, &$result){
+		return true;
+	}
+}
