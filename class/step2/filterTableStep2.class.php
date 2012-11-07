@@ -13,7 +13,7 @@ class filterTableStep2 extends Step2 {
 		foreach ($this->dataArray['tables']['filter']['fw-chains'] as $a => &$b){
 			$b['iptables-rules'] = array();
 			print_r($a) . print_r($b);
-			$this->transformToIPTables($d['rules'], $d['iptables-rules']);
+			$this->transformToIPTables($b['rules'], $b['iptables-rules']);
 		}
 		/*
 		// Now the interface chains...
