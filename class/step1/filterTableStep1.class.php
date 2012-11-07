@@ -102,10 +102,10 @@ class filterTableStep1 extends Step1 {
 							$this->logError( 'Error: Invalid Rules Array for fw-chain - ' . var_export($fwchain, true), true);
 						}
 						if (!empty($fwchain['default-goto'])){
-							$this->dataArray['tables']['filter']['fw-chains']['default-goto'] = $fwchain['default-goto'];
+							$this->dataArray['tables']['filter']['fw-chains'][$fwchain['from']]['default-goto'] = $fwchain['default-goto'];
 						} else {
 							$this->logError( 'Warning: Default-Goto for fw-chain not specified - Using default of DROP', false);
-							$this->dataArray['tables']['filter']['fw-chains']['default-goto'] = 'DROP';
+							$this->dataArray['tables']['filter']['fw-chains'][$fwchain['from']]['default-goto'] = 'DROP';
 						}
 					}
 				} else {
