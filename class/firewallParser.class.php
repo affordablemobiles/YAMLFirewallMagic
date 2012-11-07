@@ -112,7 +112,7 @@ class FirewallParser {
 			if (@$name == 'filter'){
 				$ftbl_step2 = new filterTableStep2($this->dataArray);
 			} else if (@$name == 'nat'){
-				$ntbl_step2 = new natTableStep2($$this->dataArray);
+				$ntbl_step2 = new natTableStep2($this->dataArray);
 			} else if (@$name == 'mangle'){
 				$mtbl_step2 = new mangleTableStep2($this->dataArray);
 			} else {
