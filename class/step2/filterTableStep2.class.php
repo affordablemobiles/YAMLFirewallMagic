@@ -12,7 +12,7 @@ class filterTableStep2 extends Step2 {
 		// Then process the firewall chains...
 		foreach ($this->dataArray['tables']['filter']['fw-chains'] as $a => &$b){
 			$b['iptables-rules'] = array();
-			var_export($a) . var_export($b);
+			echo 'var1 ' . var_export($a, true) . ' - var 2 ' . var_export($b, true) . ' - end';
 			$this->transformToIPTables($b['rules'], $b['iptables-rules']);
 		}
 		/*
