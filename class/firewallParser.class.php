@@ -94,12 +94,12 @@ class FirewallParser {
 	
 	private function _step1(){
 		$if_step1 = new InterfacesStep1($this->parsed, $this->dataArray);
-		foreach ( $this->parsed['tables'] as $name => $table ){
-			if (@$name == 'filter'){
+		foreach ( $this->parsed['tables'] as $table ){
+			if (@$table['name'] == 'filter'){
 				$ftbl_step1 = new filterTableStep1($table, $this->dataArray);
-			} else if (@$name == 'nat'){
+			} else if (@$table['name'] == 'nat'){
 				$ntbl_step1 = new natTableStep1($table, $this->dataArray);
-			} else if (@$name == 'mangle'){
+			} else if (@$table['name'] == 'mangle'){
 				$mtbl_step1 = new mangleTableStep1($table, $this->dataArray);
 			} else {
 				die('Invalid Table Detected');
@@ -108,12 +108,12 @@ class FirewallParser {
 	}
 	
 	private function _step2(){
-		foreach ( $this->dataArray['tables'] as $table ){
-			if (@$table['name'] == 'filter'){
+		foreach ( $this->dataArray['tables'] as $name => $table ){
+			if (@$name == 'filter'){
 				$ftbl_step2 = new filterTableStep2($this->dataArray);
-			} else if (@$table['name'] == 'nat'){
+			} else if (@$name == 'nat'){
 				$ntbl_step2 = new natTableStep2($$this->dataArray);
-			} else if (@$table['name'] == 'mangle'){
+			} else if (@$name == 'mangle'){
 				$mtbl_step2 = new mangleTableStep2($this->dataArray);
 			} else {
 				die('Invalid Table Detected');
