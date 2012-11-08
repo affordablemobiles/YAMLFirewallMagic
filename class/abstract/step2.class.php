@@ -105,8 +105,10 @@ abstract class Step2 extends logableBase {
 				$this->array_remove_key($rule, "iptables");
 			}
 			
+			$abc = $this->parseGoTo($rule, $iptables);
+			
 			// Then parse the goto...
-			if ( $ipt || $this->parseGoTo($rule, $iptables) ){
+			if ( $ipt || $abc ){
 				// Ok we're done, add the iptables text to the array...
 				$IPTablesArray[] = $iptables;
 			} else {
