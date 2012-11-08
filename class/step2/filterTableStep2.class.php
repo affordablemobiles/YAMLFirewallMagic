@@ -35,6 +35,26 @@ class filterTableStep2 extends Step2 {
 	}
 	
 	protected function parseGoTo(&$rule, &$result){
-		return true;
+		if ( (!empty($rule['goto'])) && (!empty($rule['goto-service'])) ){
+			$this->logError('Error: You can\'t have goto and goto-service in the same rule', true);
+		} else {
+			if (!empty($rule['goto'])){
+				$valid = array('ACCEPT', 'REJECT', 'DROP');
+				$valid = array_merge($valid, array_keys($this->dataArray['tables']['filter']['other-chains']));
+				if (in_array($rule['goto'], $valid)){
+					$this->appendToRule("-j " . $rule['goto'], $result);
+				} else {
+					$this->logError('Error: Invalid goto Target', true);
+				}
+			} else if (!empty($rule['goto-service'])){
+				if (in_array($rule['goto-service'], array_keys($this->dataArray['tables']['filter']['service-chains']))){
+					$this->appendToRule("-j service-" . $rule['goto-service'], $result);
+				} else {
+					$this->logError('Error: Invalid goto-service Target');
+				}
+			} else {
+				return false;
+			}
+		}
 	}
 }
