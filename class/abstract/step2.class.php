@@ -160,9 +160,9 @@ abstract class Step2 extends logableBase {
 	}
 	
 	// Usage: $this->array_remove_key($array, $key1, $key2, etc);
-	protected function array_remove_key(){
-		$args  = func_get_args();
-		return array_diff_key($args[0],array_flip(array_slice($args,1)));
+	protected function array_remove_key(&$rule){
+		$args = func_get_args();
+		$rule = array_diff_key($args[0],array_flip(array_slice($args,1)));
 	}
 
 	// Usage: $this->array_remove_value($array, $value1, $value2, etc);
