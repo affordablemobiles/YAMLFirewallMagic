@@ -116,7 +116,11 @@ abstract class Step2 extends logableBase {
 			// Then parse the goto...
 			if ( $ipt || $abc ){
 				// Ok we're done, add the iptables text to the array...
-				$IPTablesArray[] = $iptables;
+				if (count($rule) < 1){
+					$IPTablesArray[] = $iptables;
+				} else {
+					$this->logError('Error: Not all of rule could be processed, possible format error - ' . var_export($rule, true), true);
+				}
 			} else {
 				$this->logError('Error: No valid go-to or iptables code specified - ' . var_export($initrule, true), true);
 			}
