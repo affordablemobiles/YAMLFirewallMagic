@@ -43,12 +43,14 @@ class filterTableStep2 extends Step2 {
 				$valid = array_merge($valid, array_keys($this->dataArray['tables']['filter']['other-chains']));
 				if (in_array($rule['goto'], $valid)){
 					$this->appendToRule("-j " . $rule['goto'], $result);
+					return true;
 				} else {
 					$this->logError('Error: Invalid goto Target', true);
 				}
 			} else if (!empty($rule['goto-service'])){
 				if (in_array($rule['goto-service'], array_keys($this->dataArray['tables']['filter']['service-chains']))){
 					$this->appendToRule("-j service-" . $rule['goto-service'], $result);
+					return true;
 				} else {
 					$this->logError('Error: Invalid goto-service Target');
 				}
