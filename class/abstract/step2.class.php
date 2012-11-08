@@ -105,6 +105,12 @@ abstract class Step2 extends logableBase {
 				$this->array_remove_key($rule, "iptables");
 			}
 			
+			// Process the comment...
+			if (!empty($rule['comment'])){
+				$this->appendToRule("-m comment --comment \"" . $rule['comment'] . "\"", $iptables);
+				$this->array_remove_key($rule, "comment");
+			}
+			
 			$abc = $this->parseGoTo($rule, $iptables);
 			
 			// Then parse the goto...
