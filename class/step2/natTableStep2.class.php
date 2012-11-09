@@ -88,6 +88,10 @@ class natTableStep2 extends Step2 {
 				$this->appendToRule("-j RETURN", $result);
 				$this->array_remove_key($rule, "goto");
 				return true;
+			} else if ( in_array($rule['goto'], array_keys($this->dataArray['tables']['nat']['other-chains'])) ){
+				$this->appendToRule("-j " . $rule['goto'], $result);
+				$this->array_remove_key($rule, "goto");
+				return true;
 			} else {
 				$this->logError('Error: Invalid goto Specified for Rule (NAT) - ' . var_export($rule, true), true);
 			}
