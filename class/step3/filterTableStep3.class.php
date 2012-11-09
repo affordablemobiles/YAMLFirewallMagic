@@ -26,7 +26,7 @@ class filterTableStep3 extends Step3 {
 	}
 	
 	private function _rulesToChain($chain, $rules, $options = array()){
-		if ( is_array($this->chainsArray['filter'][$chain]) ){
+		if ( @is_array($this->chainsArray['filter'][$chain]) ){
 			$this->logError('Error: Trying to add a chain that already exists! - ' . $chain, true);
 		} else {
 			$this->chainsArray['filter'][$chain] = array( 'options' => $options, 'rules' => $rules );
