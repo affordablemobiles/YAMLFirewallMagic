@@ -11,9 +11,9 @@ abstract class Step2 extends logableBase {
 	
 	abstract protected function _parse();
 	
-	abstract protected function parseGoTo(&$rule, &$result);
+	abstract protected function parseGoTo(&$rule, &$result, $default);
 	
-	protected function transformToIPTables(&$rulesArray, &$IPTablesArray){
+	protected function transformToIPTables(&$rulesArray, &$IPTablesArray, $default = null){
 		// Loop through the rules...
 		foreach ($rulesArray as &$initrule){
 			// Create a copy of the rule incase we have to error out...
@@ -111,9 +111,10 @@ abstract class Step2 extends logableBase {
 				$this->array_remove_key($rule, "comment");
 			}
 			
-			$abc = $this->parseGoTo($rule, $iptables);
+			// Try parsing the goto section first, then we'll do our if....
+			$abc = $this->parseGoTo($rule, $iptables, $default);
 			
-			// Then parse the goto...
+			// Check if we actually found anything...
 			if ( $ipt || $abc ){
 				// Ok we're done, add the iptables text to the array...
 				if (count($rule) < 1){

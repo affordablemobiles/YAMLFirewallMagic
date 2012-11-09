@@ -11,4 +11,6 @@ abstract class Step1 extends logableBase {
 		$this->_parse();
 	}
 	
+	abstract protected function _parse();
+	
 }

@@ -31,47 +31,47 @@ class FirewallParser {
 								'tables' => array(
 									'filter' => array(
 										'default-chains' => array(
-											'INPUT' => array( 'policy' => 'DROP', 'rules' => array() ),
-											'FORWARD' => array( 'policy' => 'DROP', 'rules' => array() ),
-											'OUTPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() )
+											'INPUT' => array( 'policy' => 'DROP', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+											'FORWARD' => array( 'policy' => 'DROP', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+											'OUTPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ )
 										),
 										'fw-chains' => array(
-											/* IFACE => array( 'default-goto' => D-GT, 'rules' => RULES ) */
+											/* IFACE => array( 'default-goto' => D-GT, 'rules' => RULES, 'iptables-rules' => IPT-RULES ) */
 										),
 										'iface-chains' => array(
-											/* array( 'to' => TO, 'from' => FROM, 'default-goto' => D-GT, 'rules' => RULES ) */
+											/* array( 'to' => TO, 'from' => FROM, 'default-goto' => D-GT, 'rules' => RULES, 'iptables-rules' => IPT-RULES ) */
 										),
 										'service-chains' => array(
-											/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES ) */
+											/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES, 'iptables-rules' => IPT-RULES ) */
 										),
 										'other-chains' => array(
-											/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES ) */
+											/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES, 'iptables-rules' => IPT-RULES ) */
 										)
 								),
 								'nat' => array(
 									'default-chains' => array(
-										'PREROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() ),
-										'INPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() ),
-										'OUTPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() ),
-										'POSTROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() )
+										'PREROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+										'INPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+										'OUTPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+										'POSTROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ )
 									),
 									'ip-chains' => array(
-										/* array( 'in-iface' => IN-IFACE, 'ip-address' => IP-ADDRESS, 'default-goto' => D-GT, 'rules' => RULES ) */
+										/* array( 'in-iface' => IN-IFACE, 'ip-address' => IP-ADDRESS, 'default-goto' => D-GT, 'rules' => RULES, 'iptables-rules' => IPT-RULES ) */
 									),
 									'other-chains' => array(
-										/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES ) */
+										/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES, 'iptables-rules' => IPT-RULES ) */
 									)
 								),
 								'mangle' => array(
 									'default-chains' => array(
-										'PREROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() ),
-										'INPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() ),
-										'FORWARD' => array( 'policy' => 'ACCEPT', 'rules' => array() ),
-										'OUTPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() ),
-										'POSTROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() )
+										'PREROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+										'INPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+										'FORWARD' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+										'OUTPUT' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ ),
+										'POSTROUTING' => array( 'policy' => 'ACCEPT', 'rules' => array() /*, 'iptables-rules' => array() */ )
 									),
 									'other-chains' => array(
-										/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES ) */
+										/* NAME => array( 'default-goto' => D-GT, 'rules' => RULES, 'iptables-rules' => IPT-RULES ) */
 									)
 								),
 							)
