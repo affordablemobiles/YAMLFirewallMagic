@@ -35,6 +35,7 @@ class mangleTableStep2 extends Step2 {
 				$this->array_remove_key($rule, "goto");
 				return true;
 			} else {
+				echo var_export(array_keys($this->dataArray['tables']['mangle']['other-chains']), true);
 				$this->logError('Error: Invalid goto Specified for Rule (mangle) - ' . var_export($rule, true), true);
 			}
 		} else {
