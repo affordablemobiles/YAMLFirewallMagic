@@ -21,6 +21,14 @@ require __DIR__ . '/step2/filterTableStep2.class.php';
 require __DIR__ . '/step2/natTableStep2.class.php';
 require __DIR__ . '/step2/mangleTableStep2.class.php';
 
+/*---------------------------+
+|       Step 3 Classes       |
+|     Transform to Chains    |
++---------------------------*/
+require __DIR__ . '/step3/filterTableStep3.class.php';
+require __DIR__ . '/step3/natTableStep3.class.php';
+require __DIR__ . '/step3/mangleTableStep3.class.php';
+
 class FirewallParser {
 	private $parsed;
 	
@@ -75,6 +83,18 @@ class FirewallParser {
 									)
 								),
 							)
+	);
+	
+	private $chainsArray = array(
+									'filter' => array(
+										/* CHAIN-NAME => RULES (ARRAY) */
+									),
+									'nat' => array(
+										/* CHAIN-NAME => RULES (ARRAY) */
+									),
+									'mangle' => array(
+										/* CHAIN-NAME => RULES (ARRAY) */
+									)
 	);
 	
 	public function __construct($yamlRulesFile){
