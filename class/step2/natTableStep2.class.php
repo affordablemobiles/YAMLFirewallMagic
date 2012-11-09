@@ -9,7 +9,7 @@ class natTableStep2 extends Step2 {
 			$this->transformToIPTables($b['rules'], $b['iptables-rules']);
 		}
 		
-		// Now the interface chains...
+		// Now the IP chains...
 		foreach ($this->dataArray['tables']['nat']['ip-chains'] as &$e){
 			$e['iptables-rules'] = array();
 			$this->transformToIPTables($e['rules'], $e['iptables-rules']);
@@ -89,7 +89,7 @@ class natTableStep2 extends Step2 {
 				$this->array_remove_key($rule, "goto");
 				return true;
 			} else {
-				$this->logError('Error: Invalid goto Specified for Rule - ' . var_export($rule, true), true);
+				$this->logError('Error: Invalid goto Specified for Rule (NAT) - ' . var_export($rule, true), true);
 			}
 		} else {
 			return false;
