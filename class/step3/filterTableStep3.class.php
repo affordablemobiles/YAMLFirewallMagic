@@ -47,7 +47,7 @@ class filterTableStep3 extends Step3 {
 		$rules = array();
 		
 		foreach ($this->dataArray['tables']['filter']['iface-chains'] as $b){
-			$rules[] = '-i ' . $b['from'] . ' -o ' . $b['to'] . ' -j ifc-' . $b['from'] . '-to-' . $b['to'];
+			$rules[] = '-i ' . $this->dataArray['interfaces'][$b['from']] . ' -o ' . $this->dataArray['interfaces'][$b['to']] . ' -j ifc-' . $b['from'] . '-to-' . $b['to'];
 		}
 		
 		return $rules;
