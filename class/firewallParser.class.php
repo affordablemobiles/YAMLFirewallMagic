@@ -3,6 +3,7 @@
 require __DIR__ . '/abstract/logableBase.class.php';
 require __DIR__ . '/abstract/step1.class.php';
 require __DIR__ . '/abstract/step2.class.php';
+require __DIR__ . '/abstract/step3.class.php';
 
 /*---------------------------+
 |       Step 1 Classes       |
@@ -87,13 +88,13 @@ class FirewallParser {
 	
 	private $chainsArray = array(
 									'filter' => array(
-										/* CHAIN-NAME => RULES (ARRAY) */
+										/* CHAIN-NAME => array ( OPTIONS => ARRAY(), RULES => ARRAY() ) */
 									),
 									'nat' => array(
-										/* CHAIN-NAME => RULES (ARRAY) */
+										/* CHAIN-NAME => RULES ( OPTIONS => ARRAY(), RULES => ARRAY() ) */
 									),
 									'mangle' => array(
-										/* CHAIN-NAME => RULES (ARRAY) */
+										/* CHAIN-NAME => RULES ( OPTIONS => ARRAY(), RULES => ARRAY() ) */
 									)
 	);
 	
@@ -103,13 +104,14 @@ class FirewallParser {
 			
 			$this->_step1();
 			$this->_step2();
+			$this->_step3();
 		} else {
 			die( 'Invalid Rules File - Not Found' );
 		}
 	}
 	
 	public function getOutput(){
-		return $this->_step3();
+		return $this->_step4();
 	}
 	
 	private function _step1(){
@@ -142,7 +144,11 @@ class FirewallParser {
 	}
 	
 	private function _step3(){
-		print_r($this->dataArray);
+		$ftbl_step3 = new filterTableStep3($this->dataArray, $this->chainsArray);
+	}
+	
+	private function _step4(){
+		print_r($this->chainsArray);
 	}
 	
 }

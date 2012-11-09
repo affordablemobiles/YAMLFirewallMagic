@@ -50,7 +50,7 @@ class filterTableStep2 extends Step2 {
 				}
 			} else if (!empty($rule['goto-service'])){
 				if (in_array($rule['goto-service'], array_keys($this->dataArray['tables']['filter']['service-chains']))){
-					$this->appendToRule("-j service-" . $rule['goto-service'], $result);
+					$this->appendToRule("-j svc-" . $rule['goto-service'], $result);
 					$this->array_remove_key($rule, "goto-service");
 					return true;
 				} else {
