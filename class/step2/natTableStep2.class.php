@@ -84,6 +84,10 @@ class natTableStep2 extends Step2 {
 				} else {
 					$this->logError('Error: goto of REDIRECT specified without a to-ports - ' . var_export($rule, true), true);
 				}
+			} else if ( $rule['goto'] == 'RETURN' ){
+				$this->appendToRule("-j RETURN", $result);
+				$this->array_remove_key($rule, "goto");
+				return true;
 			} else {
 				$this->logError('Error: Invalid goto Specified for Rule - ' . var_export($rule, true), true);
 			}

@@ -39,7 +39,7 @@ class filterTableStep2 extends Step2 {
 			$this->logError('Error: You can\'t have goto and goto-service in the same rule', true);
 		} else {
 			if (!empty($rule['goto'])){
-				$valid = array('ACCEPT', 'REJECT', 'DROP');
+				$valid = array('ACCEPT', 'REJECT', 'DROP', 'RETURN');
 				$valid = array_merge($valid, array_keys($this->dataArray['tables']['filter']['other-chains']));
 				if (in_array($rule['goto'], $valid)){
 					$this->appendToRule("-j " . $rule['goto'], $result);
@@ -57,7 +57,7 @@ class filterTableStep2 extends Step2 {
 					$this->logError('Error: Invalid goto-service Target');
 				}
 			} else if (!empty($default)) {
-				$valid = array('ACCEPT', 'REJECT', 'DROP');
+				$valid = array('ACCEPT', 'REJECT', 'DROP', 'RETURN');
 				if (in_array($default, $valid)){
 					$this->appendToRule("-j " . $default, $result);
 					return true;
