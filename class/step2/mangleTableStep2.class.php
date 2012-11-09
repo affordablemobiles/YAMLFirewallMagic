@@ -6,7 +6,7 @@ class mangleTableStep2 extends Step2 {
 		
 	}
 	
-	protected function parseGoTo(&$rule, &$result){
+	protected function parseGoTo(&$rule, &$result, $default){
 		return true;
 	}
 }
