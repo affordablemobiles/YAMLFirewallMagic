@@ -4,6 +4,7 @@ class mangleTableStep1 extends Step1 {
 	
 	protected function _parse(){
 		$this->_defaultChains();
+		$this->_otherChains();
 	}
 	
 	private function _validDefaultPolicy($policy){
