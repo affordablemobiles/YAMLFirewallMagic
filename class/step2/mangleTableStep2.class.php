@@ -4,13 +4,13 @@ class mangleTableStep2 extends Step2 {
 	
 	protected function _parse(){
 		// First, process the default chains...
-		foreach ($this->dataArray['tables']['nat']['default-chains'] as $a => &$b){
+		foreach ($this->dataArray['tables']['mangle']['default-chains'] as $a => &$b){
 			$b['iptables-rules'] = array();
 			$this->transformToIPTables($b['rules'], $b['iptables-rules']);
 		}
 		
 		// And finally, the others...
-		foreach ($this->dataArray['tables']['nat']['other-chains'] as $h => &$i){
+		foreach ($this->dataArray['tables']['mangle']['other-chains'] as $h => &$i){
 			$i['iptables-rules'] = array();
 			$this->transformToIPTables($i['rules'], $i['iptables-rules']);
 		}
