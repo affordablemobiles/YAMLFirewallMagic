@@ -22,7 +22,7 @@ class natTableStep3 extends Step3 {
 		$chain = $this->_rname($chain);
 		
 		if ( @is_array($this->chainsArray['nat'][$chain]) ){
-			$this->logError('Error: Trying to add a chain that already exists! - ' . $chain, true);
+			$this->logError('Error: Trying to add a chain that already exists (NAT)! - ' . $chain, true);
 		} else {
 			$this->chainsArray['nat'][$chain] = array( 'options' => $options, 'rules' => $rules );
 		}
