@@ -167,10 +167,10 @@ class FirewallParser {
 		
 		// Since the actual version of iptables-save does the NAT table first, let us do the same!
 		$ntbl_step4 = new natTableStep4($this->chainsArray);
-		$output .= $ntbl_step4->output() . "\n";
+		$output .= $ntbl_step4->output();
 		// Now the filter table...
 		$ftbl_step4 = new filterTableStep4($this->chainsArray);
-		$output .= $ftbl_step4->output() . "\n";
+		$output .= $ftbl_step4->output();
 		// And finally, the mangle table.
 		$mtbl_step4 = new mangleTableStep4($this->chainsArray);
 		$output .= $mtbl_step4->output();

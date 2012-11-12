@@ -42,7 +42,7 @@ abstract class Step4 extends logableBase {
 	
 	protected function _footer(){
 		return	'COMMIT' . "\n" .
-				'# Completed on ' . date('D M j h:i:s A Y');
+				'# Completed on ' . date('D M j h:i:s A Y') . "\n";
 	}
 	
 }
