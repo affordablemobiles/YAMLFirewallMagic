@@ -6,6 +6,8 @@ abstract class Step4 extends logableBase {
 	
 	public function __construct($chainsArray){
 		$this->chainsArray = $chainsArray;
+		
+		$this->_setTable();
 	}
 	
 	abstract protected function _setTable();
