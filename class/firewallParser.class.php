@@ -145,6 +145,7 @@ class FirewallParser {
 	
 	private function _step3(){
 		$ftbl_step3 = new filterTableStep3($this->dataArray, $this->chainsArray);
+		$ntbl_step3 = new natTableStep3($this->dataArray, $this->chainsArray);
 	}
 	
 	private function _step4(){
