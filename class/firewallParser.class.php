@@ -30,6 +30,19 @@ require __DIR__ . '/step3/filterTableStep3.class.php';
 require __DIR__ . '/step3/natTableStep3.class.php';
 require __DIR__ . '/step3/mangleTableStep3.class.php';
 
+// Config...
+$config = array();
+$config['output-type'] = 'iptables-save';
+
+/*---------------------------+
+|       Step 4 Classes       |
+|     Transform to Format    |
++---------------------------*/
+require __DIR__ . '/abstract/step4-' . $config['output-type'] . '.class.php';
+require __DIR__ . '/step4-' . $config['output-type'] . '/filterTableStep4.class.php';
+require __DIR__ . '/step4-' . $config['output-type'] . '/natTableStep4.class.php';
+require __DIR__ . '/step4-' . $config['output-type'] . '/mangleTableStep4.class.php';
+
 class FirewallParser {
 	private $parsed;
 	
@@ -150,7 +163,19 @@ class FirewallParser {
 	}
 	
 	private function _step4(){
-		print_r($this->chainsArray);
+		$output = '';
+		
+		// Since the actual version of iptables-save does the NAT table first, let us do the same!
+		$ntbl_step4 = new natTableStep4($this->chainsArray);
+		$output .= $ntbl_step4->output() . "\n";
+		// Now the filter table...
+		$ftbl_step4 = new filterTableStep4($this->chainsArray);
+		$output .= $ftbl_step4->output() . "\n";
+		// And finally, the mangle table.
+		$mtbl_step4 = new mangleTableStep4($this->chainsArray);
+		$output .= $mtbl_step4->output();
+		
+		return $output;
 	}
 	
 }
