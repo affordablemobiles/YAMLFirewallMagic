@@ -26,6 +26,8 @@ class filterTableStep3 extends Step3 {
 	}
 	
 	private function _rulesToChain($chain, $rules, $options = array()){
+		$chain = $this->_rname($chain);
+		
 		if ( @is_array($this->chainsArray['filter'][$chain]) ){
 			$this->logError('Error: Trying to add a chain that already exists! - ' . $chain, true);
 		} else {
@@ -37,7 +39,7 @@ class filterTableStep3 extends Step3 {
 		$rules = array();
 		
 		foreach ($this->dataArray['tables']['filter']['fw-chains'] as $a => $b){
-			$rules[] = '-i ' . $this->dataArray['interfaces'][$a] . ' -j fwc-' . $a . '-to-fw';
+			$rules[] = '-i ' . $this->dataArray['interfaces'][$a] . ' -j ' . $this->_rname('fwc-' . $a . '-to-fw');
 		}
 		
 		return $rules;
@@ -47,7 +49,7 @@ class filterTableStep3 extends Step3 {
 		$rules = array();
 		
 		foreach ($this->dataArray['tables']['filter']['iface-chains'] as $b){
-			$rules[] = '-i ' . $this->dataArray['interfaces'][$b['from']] . ' -o ' . $this->dataArray['interfaces'][$b['to']] . ' -j ifc-' . $b['from'] . '-to-' . $b['to'];
+			$rules[] = '-i ' . $this->dataArray['interfaces'][$b['from']] . ' -o ' . $this->dataArray['interfaces'][$b['to']] . ' -j ' . $this->_rname('ifc-' . $b['from'] . '-to-' . $b['to']);
 		}
 		
 		return $rules;

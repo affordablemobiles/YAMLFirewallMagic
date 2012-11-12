@@ -119,6 +119,9 @@ class mangleTableStep1 extends Step1 {
 		if ( @is_array( $this->pdata['other-chains'] ) ){
 			foreach( $this->pdata['other-chains'] as $ochain ){
 				if ( !empty( $ochain['name'] ) ){
+					if ( ! $this->_chkChainLen($ochain['name']) ){
+						$this->logError('Error: other-chain (mangle) name longer than 30 chars', true);
+					}
 					if ( ! @is_array($this->dataArray['tables']['mangle']['other-chains'][$ochain['name']]) ){
 						if ( @is_array( $ochain['rules'] ) ){
 							$this->dataArray['tables']['mangle']['other-chains'][$ochain['name']] = array('default-goto' => 'ACCEPT', 'rules' => array());

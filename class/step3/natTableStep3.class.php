@@ -19,6 +19,8 @@ class natTableStep3 extends Step3 {
 	}
 	
 	private function _rulesToChain($chain, $rules, $options = array()){
+		$chain = $this->_rname($chain);
+		
 		if ( @is_array($this->chainsArray['nat'][$chain]) ){
 			$this->logError('Error: Trying to add a chain that already exists! - ' . $chain, true);
 		} else {
@@ -30,7 +32,7 @@ class natTableStep3 extends Step3 {
 		$rules = array();
 		
 		foreach ($this->dataArray['tables']['nat']['ip-chains'] as $b){
-			$rules[] = '-i ' . $this->dataArray['interfaces'][$b['in-iface']] . ' -d ' . $b['ip-address'] . ' -j ipc-' . $b['in-iface'] . '-addr-' . str_replace('.', '-', $b['ip-address']);
+			$rules[] = '-i ' . $this->dataArray['interfaces'][$b['in-iface']] . ' -d ' . $b['ip-address'] . ' -j ' . $this->_rname('ipc-' . $b['in-iface'] . '-addr-' . str_replace('.', '-', $b['ip-address']));
 		}
 		
 		return $rules;

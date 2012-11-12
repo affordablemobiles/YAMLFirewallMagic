@@ -13,4 +13,12 @@ abstract class Step1 extends logableBase {
 	
 	abstract protected function _parse();
 	
+	protected function _chkChainLen($chain){
+		if (strlen($chain) > 30){
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 }

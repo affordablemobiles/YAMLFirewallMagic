@@ -13,4 +13,14 @@ abstract class Step3 extends logableBase {
 	
 	abstract protected function _parse();
 	
+	protected function _rname($rname){
+		if (strlen($rname) > 30){
+			$new = substr($rname, 0, (30-strlen('-TR')));
+			$new = $new . '-TR';
+			return $new;
+		} else {
+			return $rname;
+		}
+	}
+	
 }

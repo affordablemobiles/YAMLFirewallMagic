@@ -154,6 +154,9 @@ class filterTableStep1 extends Step1 {
 		if ( @is_array( $this->pdata['service-chains'] ) ){
 			foreach( $this->pdata['service-chains'] as $schain ){
 				if ( !empty( $schain['name'] ) ){
+					if ( ! $this->_chkChainLen('service-' . $schain['name']) ){
+						$this->logError('Error: service-chain name longer than 22 chars', true);
+					}
 					if ( ! @is_array($this->dataArray['tables']['filter']['service-chains'][$schain['name']]) ){
 						if ( @is_array( $schain['rules'] ) ){
 							$this->dataArray['tables']['filter']['service-chains'][$schain['name']] = array('default-goto' => 'ACCEPT', 'rules' => array());
@@ -184,6 +187,9 @@ class filterTableStep1 extends Step1 {
 		if ( @is_array( $this->pdata['other-chains'] ) ){
 			foreach( $this->pdata['other-chains'] as $ochain ){
 				if ( !empty( $ochain['name'] ) ){
+					if ( ! $this->_chkChainLen($ochain['name']) ){
+						$this->logError('Error: other-chain name longer than 30 chars', true);
+					}
 					if ( ! @is_array($this->dataArray['tables']['filter']['other-chains'][$ochain['name']]) ){
 						if ( @is_array( $ochain['rules'] ) ){
 							$this->dataArray['tables']['filter']['other-chains'][$ochain['name']] = array('default-goto' => 'ACCEPT', 'rules' => array());
