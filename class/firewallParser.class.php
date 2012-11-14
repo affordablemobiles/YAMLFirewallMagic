@@ -144,9 +144,9 @@ class FirewallParser extends logableBase {
 				foreach($this->parsed['include'] as $i){
 					if (!empty($i['path'])){
 						if ( substr($i['path'], 0, 1) == '/' ){
-							$path = parse_url($i['path'], PHP_URL_PATH);
+							$path = $this->_fix_path($i['path']);
 						} else {
-							$path = parse_url($config['include-path'] . '/' . $i['path'], PHP_URL_PATH);
+							$path = $this->_fix_path($config['include-path'] . '/' . $i['path']);
 						}
 						
 						if (is_file($path)){
@@ -162,6 +162,11 @@ class FirewallParser extends logableBase {
 		}
 		
 		$this->_step1($data);
+	}
+	
+	private function _fix_path($path){
+		$path = preg_replace('/\w+\/\.\.\//', '', $path);
+		return $path;
 	}
 	
 	private function _step1($input){
