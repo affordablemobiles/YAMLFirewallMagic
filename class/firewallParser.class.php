@@ -33,6 +33,7 @@ require __DIR__ . '/step3/mangleTableStep3.class.php';
 // Config...
 $config = array();
 $config['output-type'] = 'iptables-save';
+$config['include-path'] = __DIR__ . '../include';
 
 /*---------------------------+
 |       Step 4 Classes       |
@@ -45,6 +46,7 @@ require __DIR__ . '/step4-' . $config['output-type'] . '/mangleTableStep4.class.
 
 class FirewallParser {
 	private $parsed;
+	private $basefile;
 	
 	private $dataArray = array(
 								'interfaces' => array(
@@ -114,6 +116,7 @@ class FirewallParser {
 	public function __construct($yamlRulesFile){
 		if (is_file($yamlRulesFile)){
 			$this->parsed = yaml_parse_file( $yamlRulesFile );
+			$this->basefile = realpath($yamlRulesFile);
 			
 			$this->_step1();
 			$this->_step2();
@@ -127,17 +130,52 @@ class FirewallParser {
 		return $this->_step4();
 	}
 	
-	private function _step1(){
+	private function _step0($file = false){
+		global $config;
+		
+		if ($file === false){
+			$data = $this->parsed;
+		} else {
+			$data = yaml_parse_file( $file );
+		}
+		
+		if (is_array($this->parsed['include'])){
+			if (count($this->parsed['include']) > 0){
+				foreach($this->parsed['include'] as $i){
+					if (!empty($i['path'])){
+						if ( substr($i['path'], 0, 1) == '/' ){
+							$path = $i['path'];
+						} else {
+							$path = $config['include-path'] . '/' . $i['path'];
+						}
+						
+						if (is_file($path)){
+							$this->_step0($path);
+						} else {
+							die ( '404 - File Not Found - ' . $path );
+						}
+					} else {
+						die ( 'Invalid Path Specified - ' . var_dump($i, true) );
+				}
+			}
+		}
+		
+		$this->step1($data);
+	}
+	
+	private function _step1($input){
 		$if_step1 = new InterfacesStep1($this->parsed, $this->dataArray);
-		foreach ( $this->parsed['tables'] as $table ){
-			if (@$table['name'] == 'filter'){
-				$ftbl_step1 = new filterTableStep1($table, $this->dataArray);
-			} else if (@$table['name'] == 'nat'){
-				$ntbl_step1 = new natTableStep1($table, $this->dataArray);
-			} else if (@$table['name'] == 'mangle'){
-				$mtbl_step1 = new mangleTableStep1($table, $this->dataArray);
-			} else {
-				die('Invalid Table Detected');
+		if (is_array($input['tables'])){
+			foreach ( $this->parsed['tables'] as $table ){
+				if (@$table['name'] == 'filter'){
+					$ftbl_step1 = new filterTableStep1($table, $this->dataArray);
+				} else if (@$table['name'] == 'nat'){
+					$ntbl_step1 = new natTableStep1($table, $this->dataArray);
+				} else if (@$table['name'] == 'mangle'){
+					$mtbl_step1 = new mangleTableStep1($table, $this->dataArray);
+				} else {
+					die('Invalid Table Detected');
+				}
 			}
 		}
 	}
