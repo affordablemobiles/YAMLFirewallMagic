@@ -170,9 +170,11 @@ class FirewallParser extends logableBase {
 	}
 	
 	private function _step1($input){
-		$if_step1 = new InterfacesStep1($this->parsed, $this->dataArray);
+		if (is_array($input['interfaces'])){
+			$if_step1 = new InterfacesStep1($input, $this->dataArray);
+		}
 		if (is_array($input['tables'])){
-			foreach ( $this->parsed['tables'] as $table ){
+			foreach ( $input['tables'] as $table ){
 				if (@$table['name'] == 'filter'){
 					$ftbl_step1 = new filterTableStep1($table, $this->dataArray);
 				} else if (@$table['name'] == 'nat'){
