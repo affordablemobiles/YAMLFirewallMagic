@@ -118,7 +118,7 @@ class FirewallParser extends logableBase {
 			$this->parsed = yaml_parse_file( $yamlRulesFile );
 			$this->basefile = realpath($yamlRulesFile);
 			
-			$this->_step1();
+			$this->_step0();
 			$this->_step2();
 			$this->_step3();
 		} else {
