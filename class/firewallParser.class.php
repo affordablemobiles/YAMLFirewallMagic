@@ -44,7 +44,7 @@ require __DIR__ . '/step4-' . $config['output-type'] . '/filterTableStep4.class.
 require __DIR__ . '/step4-' . $config['output-type'] . '/natTableStep4.class.php';
 require __DIR__ . '/step4-' . $config['output-type'] . '/mangleTableStep4.class.php';
 
-class FirewallParser {
+class FirewallParser extends logableBase {
 	private $parsed;
 	private $basefile;
 	
@@ -122,7 +122,7 @@ class FirewallParser {
 			$this->_step2();
 			$this->_step3();
 		} else {
-			die( 'Invalid Rules File - Not Found' );
+			$this->logError( 'Invalid Rules File - Not Found' );
 		}
 	}
 	
@@ -152,10 +152,10 @@ class FirewallParser {
 						if (is_file($path)){
 							$this->_step0($path);
 						} else {
-							die ( '404 - File Not Found - ' . $path );
+							$this->logError ( '404 - File Not Found - ' . $path );
 						}
 					} else {
-						die ( 'Invalid Path Specified - ' . var_dump($i, true) );
+						$this->logError ( 'Invalid Path Specified - ' . var_dump($i, true) );
 				}
 			}
 		}
@@ -174,7 +174,7 @@ class FirewallParser {
 				} else if (@$table['name'] == 'mangle'){
 					$mtbl_step1 = new mangleTableStep1($table, $this->dataArray);
 				} else {
-					die('Invalid Table Detected');
+					$this->logError('Invalid Table Detected');
 				}
 			}
 		}
@@ -189,7 +189,7 @@ class FirewallParser {
 			} else if (@$name == 'mangle'){
 				$mtbl_step2 = new mangleTableStep2($this->dataArray);
 			} else {
-				die('Invalid Table Detected');
+				$this->logError('Invalid Table Detected');
 			}
 		}
 	}
