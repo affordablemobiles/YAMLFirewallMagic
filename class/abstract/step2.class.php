@@ -129,7 +129,7 @@ abstract class Step2 extends logableBase {
 	}
 	
 	protected function appendToRule($append, &$rule){
-		if (@substr($rule, -1, 1) == ' '){
+		if (empty($rule) || (@substr($rule, -1, 1) == ' ')){
 			$rule = $rule . $append;
 		} else {
 			$rule = $rule . ' ' . $append;
