@@ -139,9 +139,9 @@ class FirewallParser extends logableBase {
 			$data = yaml_parse_file( $file );
 		}
 		
-		if (is_array($this->parsed['include'])){
-			if (count($this->parsed['include']) > 0){
-				foreach($this->parsed['include'] as $i){
+		if (is_array($data['include'])){
+			if (count($data['include']) > 0){
+				foreach($data['include'] as $i){
 					if (!empty($i['path'])){
 						if ( substr($i['path'], 0, 1) == '/' ){
 							$path = $this->_fix_path($i['path']);
