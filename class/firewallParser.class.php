@@ -156,11 +156,12 @@ class FirewallParser extends logableBase {
 						}
 					} else {
 						$this->logError ( 'Invalid Path Specified - ' . var_dump($i, true) );
+					}
 				}
 			}
 		}
 		
-		$this->step1($data);
+		$this->_step1($data);
 	}
 	
 	private function _step1($input){
