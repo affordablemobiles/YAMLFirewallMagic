@@ -33,7 +33,7 @@ require __DIR__ . '/step3/mangleTableStep3.class.php';
 // Config...
 $config = array();
 $config['output-type'] = 'iptables-save';
-$config['include-path'] = __DIR__ . '../include';
+$config['include-path'] = __DIR__ . '/../include';
 
 /*---------------------------+
 |       Step 4 Classes       |
