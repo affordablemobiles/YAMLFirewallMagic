@@ -13,6 +13,45 @@ $cmdopts = getopt('hwso', array('help', 'overwrite', 'quiet', 'stdout'));
 // the help.
 //-----------------------------
 if ( (@$cmdopts['h'] === false) || (@$cmdopts['help'] === false) ){
+	showHelp();
+}
+
+if ( (@$cmdopts['o'] === false) || (@$cmdopts['stdout'] === false) ){
+	if (count($_SERVER['argv']) > 1){
+		$file = array_pop($_SERVER['argv']);
+		
+		if (is_file($file)){
+			$data = new FirewallParser( realpath($file) );
+			
+			echo $data->getOutput();
+		} else {
+			die( 'Invalid Input File' . "\n" );
+		}
+	} else {
+		showHelp();
+	}
+} else {
+	if (count($_SERVER['argv']) > 1){
+		$outfile = array_pop($_SERVER['argv']);
+		$file = array_pop($_SERVER['argv']);
+		
+		if (is_file($file)){
+			if (is_file($outfile) && (@$cmdopts['w'] !== false)){
+				die( 'Output File Already Exists' . "\n" );
+			}
+			
+			$data = new FirewallParser( realpath($file) );
+			
+			file_put_contents($outfile, $data->getOutput());
+		} else {
+			die( 'Invalid Input File' . "\n" );
+		}
+	} else {
+		showHelp();
+	}
+}
+
+function showHelp(){
 	echo 'YAMLFirewallMagic - Infitialis Web Services v0.1 ALPHA';
 	echo "\n" . 'fwcompile [<options>] <INPUT FILE> [<OUTPUT FILE>] - Compile YAML firewall config down to iptables-save format.';
 	echo "\n\n" . 'Options:';
@@ -22,22 +61,4 @@ if ( (@$cmdopts['h'] === false) || (@$cmdopts['help'] === false) ){
 	echo "\n" . '    -o  ' . str_pad('--stdout', 14, ' ') . ' - Print output to stdout.';
 	echo "\n";
 	exit();
-}
-
-if ( (@$cmdopts['o'] === false) || (@$cmdopts['stdout'] === false) ){
-	if (count($_SERVER['argv']) > 1){
-		$file = array_pop($_SERVER['argv']);
-		
-		if (is_file(getcwd() . '/' . $file)){
-			$data = new FirewallParser( realpath(getcwd() . '/' . $file) );
-			
-			echo $data->getOutput();
-		} else {
-			die('Error');
-		}
-	} else {
-		die('Error');
-	}
-} else {
-	
 }
