@@ -28,8 +28,8 @@ if ( (@$cmdopts['o'] === false) || (@$cmdopts['stdout'] === false) ){
 	if (count($_SERVER['argv']) > 1){
 		$file = array_pop($_SERVER['argv']);
 		
-		if (is_file($file)){
-			$data = new FirewallParser( realpath($file) );
+		if (is_file(getcwd() . '/' . $file)){
+			$data = new FirewallParser( realpath(getcwd() . '/' . $file) );
 			
 			echo $data->getOutput();
 		} else {
