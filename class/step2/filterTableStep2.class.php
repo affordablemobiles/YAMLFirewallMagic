@@ -18,19 +18,19 @@ class filterTableStep2 extends Step2 {
 		// Now the interface chains...
 		foreach ($this->dataArray['tables']['filter']['iface-chains'] as &$e){
 			$e['iptables-rules'] = array();
-			$this->transformToIPTables($e['rules'], $e['iptables-rules'], $b['default-goto']);
+			$this->transformToIPTables($e['rules'], $e['iptables-rules'], $e['default-goto']);
 		}
 		
 		// Now the service chains...
 		foreach ($this->dataArray['tables']['filter']['service-chains'] as $f => &$g){
 			$g['iptables-rules'] = array();
-			$this->transformToIPTables($g['rules'], $g['iptables-rules'], $b['default-goto']);
+			$this->transformToIPTables($g['rules'], $g['iptables-rules'], $g['default-goto']);
 		}
 		
 		// And finally, the others...
 		foreach ($this->dataArray['tables']['filter']['other-chains'] as $h => &$i){
 			$i['iptables-rules'] = array();
-			$this->transformToIPTables($i['rules'], $i['iptables-rules'], $b['default-goto']);
+			$this->transformToIPTables($i['rules'], $i['iptables-rules'], $i['default-goto']);
 		}
 	}
 	
