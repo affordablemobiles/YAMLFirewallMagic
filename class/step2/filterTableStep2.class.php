@@ -56,7 +56,7 @@ class filterTableStep2 extends Step2 {
 				} else {
 					$this->logError('Error: Invalid goto-service Target');
 				}
-			} else if (!empty($default)) {
+			} else if (!empty($default) && empty($initrule['iptables'])) {
 				$valid = array('ACCEPT', 'REJECT', 'DROP', 'RETURN');
 				if (in_array($default, $valid)){
 					$this->appendToRule("-j " . $default, $result);
