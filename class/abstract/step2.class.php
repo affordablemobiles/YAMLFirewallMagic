@@ -11,7 +11,7 @@ abstract class Step2 extends logableBase {
 	
 	abstract protected function _parse();
 	
-	abstract protected function parseGoTo(&$rule, &$result, $default);
+	abstract protected function parseGoTo(&$rule, &$result, $default, $initrule);
 	
 	protected function transformToIPTables(&$rulesArray, &$IPTablesArray, $default = null){
 		// Loop through the rules...
@@ -112,7 +112,7 @@ abstract class Step2 extends logableBase {
 			}
 			
 			// Try parsing the goto section first, then we'll do our if....
-			$abc = $this->parseGoTo($rule, $iptables, $default);
+			$abc = $this->parseGoTo($rule, $iptables, $default, $initrule);
 			
 			// Check if we actually found anything...
 			if ( $ipt || $abc ){

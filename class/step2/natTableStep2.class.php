@@ -22,7 +22,7 @@ class natTableStep2 extends Step2 {
 		}
 	}
 	
-	protected function parseGoTo(&$rule, &$result, $default = null){
+	protected function parseGoTo(&$rule, &$result, $default = null, $initrule = null){
 		if ( !empty($rule['goto']) ){
 			if ( $rule['goto'] == 'DNAT' ){
 				if ( !empty($rule['to']) ){
@@ -77,16 +77,20 @@ class natTableStep2 extends Step2 {
 				$this->array_remove_key($rule, "goto");
 				return true;
 			} else if ( $rule['goto'] == 'REDIRECT' ){
-				if ( !empty($rule['to']) ){
-					$this->appendToRule("-j REDIRECT --to-ports " . $rule['to'], $result);
-					$this->array_remove_key($rule, "goto", "to");
-					return true;
-				} else if ( !empty($rule['to-ports']) ){
-					$this->appendToRule("-j REDIRECT --to-ports " . $rule['to-ports'], $result);
-					$this->array_remove_key($rule, "goto", "to-ports");
-					return true;
+				if (in_array($initrule['proto'], array('tcp', 'udp'))){
+					if ( !empty($rule['to']) ){
+						$this->appendToRule("-j REDIRECT --to-ports " . $rule['to'], $result);
+						$this->array_remove_key($rule, "goto", "to");
+						return true;
+					} else if ( !empty($rule['to-ports']) ){
+						$this->appendToRule("-j REDIRECT --to-ports " . $rule['to-ports'], $result);
+						$this->array_remove_key($rule, "goto", "to-ports");
+						return true;
+					} else {
+						$this->logError('Error: goto of REDIRECT specified without a to-ports - ' . var_export($rule, true), true);
+					}
 				} else {
-					$this->logError('Error: goto of REDIRECT specified without a to-ports - ' . var_export($rule, true), true);
+					$this->logError('Error: REDIRECT target required proto to be specified ' . var_export($initrule, true), true);
 				}
 			} else if ( $rule['goto'] == 'RETURN' ){
 				$this->appendToRule("-j RETURN", $result);

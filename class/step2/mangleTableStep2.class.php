@@ -16,7 +16,7 @@ class mangleTableStep2 extends Step2 {
 		}
 	}
 	
-	protected function parseGoTo(&$rule, &$result, $default){
+	protected function parseGoTo(&$rule, &$result, $default, $initrule = null){
 		if ( !empty($rule['goto']) ){
 			if ( $rule['goto'] == 'MARK' ){
 				if ( !empty($rule['set-mark']) ){

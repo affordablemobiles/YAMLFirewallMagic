@@ -34,7 +34,7 @@ class filterTableStep2 extends Step2 {
 		}
 	}
 	
-	protected function parseGoTo(&$rule, &$result, $default = null){
+	protected function parseGoTo(&$rule, &$result, $default = null, $initrule = null){
 		if ( (!empty($rule['goto'])) && (!empty($rule['goto-service'])) ){
 			$this->logError('Error: You can\'t have goto and goto-service in the same rule', true);
 		} else {
