@@ -72,6 +72,10 @@ class natTableStep2 extends Step2 {
 				} else {
 					$this->logError('Error: goto of SNAT specified without a to-source - ' . var_export($rule, true), true);
 				}
+			} else if ( $rule['goto'] == 'MASQUERADE' ){
+				$this->appendToRule("-j MASQUERADE", $result);
+				$this->array_remove_key($rule, "goto");
+				return true;
 			} else if ( $rule['goto'] == 'REDIRECT' ){
 				if ( !empty($rule['to']) ){
 					$this->appendToRule("-j REDIRECT --to-ports " . $rule['to'], $result);
