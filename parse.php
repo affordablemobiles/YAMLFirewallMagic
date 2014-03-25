@@ -1,6 +1,7 @@
+#!/usr/bin/php
 <?php
 
-require __DIR__ . '/class/firewallParser.class.php';
+require '/usr/share/YAMLFirewallMagic/class/firewallParser.class.php';
 
 //$data = new FirewallParser( 'Daventry Firewall Rules.fwcfg' );
 

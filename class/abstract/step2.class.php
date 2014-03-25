@@ -50,7 +50,7 @@ abstract class Step2 extends logableBase {
 			
 			// Check for a protocol definition...
 			if (!empty($rule['proto'])){
-				$valid = array('tcp', 'udp', 'icmp');
+				$valid = array('tcp', 'udp', 'icmp', 'vrrp');
 				$sdport = array('tcp', 'udp');
 				if (in_array($rule['proto'], $valid)){
 					$this->appendToRule("-p " . $rule['proto'], $iptables);

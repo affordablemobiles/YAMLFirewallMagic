@@ -94,6 +94,7 @@ class filterTableStep1 extends Step1 {
 						$this->logError( 'Error: Firewall Chain for This Interface Already Exists - Duplicate - ' . var_export($fwchain, true), true);
 					} else {
 						$this->dataArray['tables']['filter']['fw-chains'][$fwchain['from']] = array();
+						$this->dataArray['tables']['filter']['fw-chains'][$fwchain['from']]['rules'] = array();
 						if ( @is_array($fwchain['rules']) ){
 							foreach ($fwchain['rules'] as $rule){
 								$this->dataArray['tables']['filter']['fw-chains'][$fwchain['from']]['rules'][] = $rule;

@@ -191,10 +191,13 @@ class FirewallParser extends logableBase {
 	private function _step2(){
 		foreach ( $this->dataArray['tables'] as $name => $table ){
 			if (@$name == 'filter'){
+				if (@$_ENV["FWDEBUG"] == 'true') echo 'Filter Table Step 2';
 				$ftbl_step2 = new filterTableStep2($this->dataArray);
 			} else if (@$name == 'nat'){
+				if (@$_ENV["FWDEBUG"] == 'true') echo 'NAT Table Step 2';
 				$ntbl_step2 = new natTableStep2($this->dataArray);
 			} else if (@$name == 'mangle'){
+				if (@$_ENV["FWDEBUG"] == 'true') echo 'Mangle Table Step 2';
 				$mtbl_step2 = new mangleTableStep2($this->dataArray);
 			} else {
 				$this->logError('Invalid Table Detected');
